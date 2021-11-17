@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 const authRoute = require("./routes").auth;
+// LT.536
+const passport = require("passport");
+require("./config/passport")(passport);
 
 mongoose
   .connect(process.env.DB_CONNECT, {
