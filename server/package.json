@@ -20,5 +20,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
 }

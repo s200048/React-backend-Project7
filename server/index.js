@@ -29,7 +29,8 @@ app.use(passport.initialize());
 app.use("/api/user", authRoute);
 app.use(
   "/api/courses",
-  passport.authenticate("jwt", { session: false }, courseRoute)
+  passport.authenticate("jwt", { session: false }),
+  courseRoute
 );
 
 app.listen(8000, () => {
