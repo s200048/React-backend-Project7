@@ -76,7 +76,6 @@ router.post("/login", (req, res) => {
           const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
           res.send({ success: true, token: "JWT" + token, user });
         } else {
-          console.log(err);
           res.status(401).send("Wrong password.");
         }
       });

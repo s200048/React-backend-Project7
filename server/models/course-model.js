@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-// import bcrypt from "bcrypt";
-// const { Schema } = mongoose;
 
 const courseSchema = new mongoose.Schema({
   id: { type: String },
