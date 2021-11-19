@@ -9,12 +9,16 @@ const userSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-userSchema.methods.isStudent = () => {
+userSchema.methods.isStudent = function () {
   return this.role == "student";
 };
 
-userSchema.methods.isInstructor = () => {
+userSchema.methods.isInstructor = function () {
   return this.role == "instructor";
+};
+
+userSchema.methods.isAdmin = function () {
+  return this.role == "admin";
 };
 
 // mongoose schema middleware
