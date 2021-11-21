@@ -20,10 +20,12 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:_id", async (req, res) => {
+  console.log(req.params);
   let { _id } = req.params;
   try {
     let course = await Course.findOne({ _id }).populate("instructor", [
       "email",
+      "password",
     ]);
     res.status(200).send(course);
   } catch (err) {
@@ -74,6 +76,14 @@ router.patch("/:_id", async (req, res) => {
     });
   }
   //Check 個course id 係咪同一個人
+  if (course.instructor === undefined) {
+    res.status(403);
+    return res.json({
+      muccess: false,
+      message: "There is no course instructor here.",
+    });
+  }
+
   if (course.instructor.equals(req.user._id) || req.user.isAdmin()) {
     try {
       await Course.findOneAndUpdate({ _id }, req.body, {
@@ -104,6 +114,15 @@ router.delete("/:_id", async (req, res) => {
       message: "Course not found.",
     });
   }
+
+  if (course.instructor === undefined) {
+    res.status(403);
+    return res.json({
+      muccess: false,
+      message: "There is no course instructor here.",
+    });
+  }
+
   if (course.instructor.equals(req.user._id) || req.user.isAdmin()) {
     try {
       await Course.deleteOne({ _id });
