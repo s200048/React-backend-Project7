@@ -1,0 +1,19 @@
+<div style={{ padding: "3rem" }} className="col-md-12">
+      <div>
+        {htmlInput.map((item, index) => {
+          <div className="form-group">
+            <label>{labelName[index]}</label>
+            <input
+              type={item.type}
+              className={item.classname}
+              name={labelName[index]}
+            />
+          </div>;
+        })}
+
+        
+        <button className="btn btn-primary">
+          <span>Register</span>
+        </button>
+      </div>
+    </div>

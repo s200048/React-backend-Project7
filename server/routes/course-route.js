@@ -20,12 +20,11 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:_id", async (req, res) => {
-  console.log(req.params);
+  // console.log(req.params);
   let { _id } = req.params;
   try {
     let course = await Course.findOne({ _id }).populate("instructor", [
       "email",
-      "password",
     ]);
     res.status(200).send(course);
   } catch (err) {
