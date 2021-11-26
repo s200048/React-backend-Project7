@@ -8,6 +8,7 @@ const authRoute = require("./routes").auth;
 const courseRoute = require("./routes").course;
 const passport = require("passport");
 require("./config/passport")(passport);
+const cors = require("cors");
 
 mongoose
   .connect(process.env.DB_CONNECT, {
@@ -25,6 +26,8 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
+// 一定要放係兩個route 上邊
+app.use(cors());
 //要留意係到一定要加 /api， 因為要同 React connect 係用方便好多
 app.use("/api/user", authRoute);
 app.use(
