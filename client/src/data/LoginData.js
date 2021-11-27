@@ -1,11 +1,11 @@
 export let LoginData = [
   {
-    htmlFor: "email",
+    htmlFor: "Email",
     type: "text",
     classname: "form-control",
   },
   {
-    htmlFor: "password",
+    htmlFor: "Password",
     type: "password",
     classname: "form-control",
   },

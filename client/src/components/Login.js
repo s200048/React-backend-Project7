@@ -14,6 +14,28 @@ const Login = () => {
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
+  const loginHandler = () => {
+    AuthService.login(email, password)
+      .then((response) => {
+        console.log(response);
+        if (response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        navigate("/profile");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log(err.response);
+        setMessage(err.response.data);
+      });
+  };
+
+  const handler = [{ fn: handleChangeEmail }, { fn: handleChangePassword }];
+
+  let newLoginData = LoginData.map((item, index) => {
+    let newObject = Object.assign(handler[index], item);
+    return newObject;
+  });
 
   return (
     <div style={{ padding: "3rem" }} className="col-md-12">
@@ -23,16 +45,20 @@ const Login = () => {
             {message}
           </div>
         )}
-        {LoginData.map((item, index) => (
+        {newLoginData.map((item, index) => (
           <>
             <label htmlFor={item.htmlFor}>{item.htmlFor}</label>
-            <input type={item.type} className={item.classname} />
+            <input
+              type={item.type}
+              className={item.classname}
+              onChange={item.fn}
+            />
             <br />
           </>
         ))}
 
         <div className="form-group">
-          <button className="btn btn-primary btn-block">
+          <button onClick={loginHandler} className="btn btn-primary btn-block">
             <span>Login</span>
           </button>
         </div>
