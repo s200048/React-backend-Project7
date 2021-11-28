@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { registerData } from "../data/RegisterData";
 import AuthService from "../services/auth.service";
 // 因為係react-router-dom v6 所以係用呢個，同埋唔洗加.push
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
   let [username, setUsername] = useState("");
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [role, setRole] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const history = useHistory();
   let [message, setMessage] = useState("");
 
   const userHandler = (e) => {
@@ -39,11 +40,13 @@ const Register = () => {
     return newObject;
   });
 
+  // console.log(newregisterData);
+
   const registerHandler = () => {
     AuthService.register(username, email, password, role)
       .then(() => {
         window.alert("Registration succeeds.");
-        navigate("/login");
+        history.push("/login");
       })
       .catch((err) => {
         console.log(err.response);

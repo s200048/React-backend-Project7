@@ -9,7 +9,9 @@ class AuthService {
       password,
     });
   }
-  logout() {}
+  logout() {
+    localStorage.removeItem("user");
+  }
   register(username, email, password, role) {
     return axios.post(API_URL + "/register", {
       username,
@@ -18,7 +20,9 @@ class AuthService {
       role,
     });
   }
-  getCurrentUser() {}
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem("user"));
+  }
 }
 
 // 因為AuthService 係個class ，所以要export as new Object

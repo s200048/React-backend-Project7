@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useHistory } from "react-router";
 import AuthService from "../services/auth.service";
 import { LoginData } from "../data/LoginData";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const history = useHistory();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [message, setMessage] = useState("");
@@ -21,7 +22,7 @@ const Login = () => {
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
-        navigate("/profile");
+        history.push("/profile");
       })
       .catch((err) => {
         console.log(err);
