@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AuthService from "../services/auth.service";
 
-const Profile = () => {
-  //Save目前係邊個current user
-
-  let [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    setCurrentUser(AuthService.getCurrentUser());
-  }, []);
+const Profile = (props) => {
+  let { currentUser, setCurrentUser } = props;
 
   return (
     <div style={{ padding: "3rem" }}>

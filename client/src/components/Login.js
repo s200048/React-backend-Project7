@@ -3,12 +3,13 @@ import { useHistory } from "react-router";
 import AuthService from "../services/auth.service";
 import { LoginData } from "../data/LoginData";
 
-const Login = () => {
+const Login = (currentUser, setCurrentUser) => {
   // const navigate = useNavigate();
   const history = useHistory();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [message, setMessage] = useState("");
+
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -16,19 +17,19 @@ const Login = () => {
     setPassword(e.target.value);
   };
   const loginHandler = () => {
-    AuthService.login(email, password)
-      .then((response) => {
-        console.log(response);
-        if (response.data.token) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-        history.push("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log(err.response);
-        setMessage(err.response.data);
-      });
+    AuthService.login(email, password).then((response) => {
+      console.log(response);
+      if (response.data.token) {
+        localStorage.setItem("user", JSON.stringify(response.data));
+      }
+      setCurrentUser(AuthService.getCurrentUser());
+      history.push("/profile");
+    });
+    // .catch((err) => {
+    //   console.log(err);
+    //   console.log(err.response);
+    //   setMessage(err.response.data);
+    // });
   };
 
   const handler = [{ fn: handleChangeEmail }, { fn: handleChangePassword }];

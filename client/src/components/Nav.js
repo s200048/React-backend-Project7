@@ -11,13 +11,13 @@ let navTitle = [
 ];
 
 const Nav = (props) => {
-  // let { currentUser, setCurrentUser } = props;
+  let { currentUser, setCurrentUser } = props;
   const history = useHistory();
 
   const logouthandler = () => {
     AuthService.logout();
     alert("Logout successfully.");
-    // setCurrentUser(null);
+    setCurrentUser(null);
     history.push("/");
   };
 
