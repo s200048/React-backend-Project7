@@ -19,20 +19,12 @@ function App() {
 
         <Route path="/register" exact component={Register} />
 
-        <Route
-          path="/login"
-          exact
-          component={Login}
-          currentUser={currentUser}
-          setCurrentUser={setCurrentUser}
-        />
-        <Route
-          path="/profile"
-          exact
-          component={Profile}
-          currentUser={currentUser}
-          setCurrentUser={setCurrentUser}
-        />
+        <Route path="/login" exact>
+          <Login currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        </Route>
+        <Route path="/profile" exact>
+          <Profile currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        </Route>
       </Switch>
     </div>
   );

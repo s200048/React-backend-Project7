@@ -3,12 +3,14 @@ import { useHistory } from "react-router";
 import AuthService from "../services/auth.service";
 import { LoginData } from "../data/LoginData";
 
-const Login = (currentUser, setCurrentUser) => {
+const Login = (props) => {
   // const navigate = useNavigate();
   const history = useHistory();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [message, setMessage] = useState("");
+
+  let { currentUser, setCurrentUser } = props;
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -16,12 +18,14 @@ const Login = (currentUser, setCurrentUser) => {
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
+  // console.log(setCurrentUser);
   const loginHandler = () => {
     AuthService.login(email, password).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
+      // console.log(setCurrentUser);
       setCurrentUser(AuthService.getCurrentUser());
       history.push("/profile");
     });
