@@ -21,6 +21,7 @@ class AuthService {
     });
   }
   getCurrentUser() {
+    // 用json.parse 去搵果個人出嚟
     return JSON.parse(localStorage.getItem("user"));
   }
 }

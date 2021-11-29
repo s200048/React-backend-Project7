@@ -18,14 +18,12 @@ const Login = (props) => {
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
-  // console.log(setCurrentUser);
   const loginHandler = () => {
     AuthService.login(email, password).then((response) => {
       // console.log(response);
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
-      // console.log(setCurrentUser);
       setCurrentUser(AuthService.getCurrentUser());
       history.push("/profile");
     });
