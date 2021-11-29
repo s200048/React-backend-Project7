@@ -17,13 +17,20 @@ let navTitle = [
     beforelogin: true,
   },
   { classname: "nav-link", title: "Login", path: "/login", beforelogin: true },
-  { classname: "nav-link", title: "Logout", path: "#", afterlogin: true },
+
   {
     classname: "nav-link",
-    title: "profile",
+    title: "Course",
+    path: "/course",
+    afterlogin: true,
+  },
+  {
+    classname: "nav-link",
+    title: "Profile",
     path: "/profile",
     afterlogin: true,
   },
+  { classname: "nav-link", title: "Logout", path: "#", afterlogin: true },
 ];
 
 const Nav = (props) => {
@@ -39,7 +46,7 @@ const Nav = (props) => {
   };
 
   // let newNavTilte = Object.assign(handler[0], navTitle[3]);
-  navTitle[3]["fn"] = logouthandler;
+  navTitle[5]["fn"] = logouthandler;
 
   // let newFilter = navTitle;
   // newFilter.splice(1, 1);

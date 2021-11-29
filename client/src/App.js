@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Routes, Route } from "react-router-dom";
+import Course from "./components/Course";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Nav from "./components/Nav";
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/profile" exact>
           <Profile currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        </Route>
+        <Route path="/course" exact>
+          <Course currentUser={currentUser} setCurrentUser={setCurrentUser} />
         </Route>
       </Switch>
     </div>

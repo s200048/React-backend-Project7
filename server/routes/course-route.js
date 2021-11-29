@@ -19,6 +19,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/instructor/:_instructor_id", (req, res) => {
+  let { _instructor_id } = req.params;
+  Course.find({ instructor: _instructor_id })
+    .populate("instructor", ["username", "email"])
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Cannot get course data.");
+    });
+});
+
 router.get("/:_id", async (req, res) => {
   // console.log(req.params);
   let { _id } = req.params;
