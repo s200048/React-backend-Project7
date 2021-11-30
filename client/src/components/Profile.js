@@ -7,6 +7,7 @@ const Profile = (props) => {
   return (
     <div style={{ padding: "3rem" }}>
       {!currentUser && <div>You must login first</div>}
+      {/* {console.log(currentUser)} */}
       {currentUser && (
         <div>
           <h1>In profile page</h1>
@@ -24,6 +25,9 @@ const Profile = (props) => {
             </strong>
             <strong>
               <p>Email: {currentUser.user.email}</p>
+            </strong>
+            <strong>
+              <p>Role: {currentUser.user.role}</p>
             </strong>
           </p>
         </div>

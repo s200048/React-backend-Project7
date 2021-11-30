@@ -76,7 +76,8 @@ router.post("/login", (req, res) => {
         if (isMatch) {
           const tokenObject = { _id: user._id, email: user.email };
           const token = jwt.sign(tokenObject, process.env.PASSPORT_SECRET);
-          res.send({ success: true, token: "JWT" + token, user });
+          // **係JWT 後邊要加個white space，唔知點解唔加就對唔上個JWT**
+          res.send({ success: true, token: "JWT " + token, user });
         } else {
           res.status(401).send("Wrong password.");
         }
