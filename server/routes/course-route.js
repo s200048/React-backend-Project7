@@ -32,6 +32,20 @@ router.get("/instructor/:_instructor_id", (req, res) => {
     });
 });
 
+router.get("/student/:_student_id", async (req, res) => {
+  let { _student_id } = req.params;
+  try {
+    // 要搵個Course 入邊嘅students array，可以用stidents(props): _student_id(value) 直接搵到相似嘅
+    let findCourse = await Course.find({ students: _student_id }).populate(
+      "instructor",
+      ["username", "email"]
+    );
+    res.status(200).send(findCourse);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/:_id", async (req, res) => {
   // console.log(req.params);
   let { _id } = req.params;

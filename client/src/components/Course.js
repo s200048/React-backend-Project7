@@ -7,21 +7,28 @@ const Course = (props) => {
   const history = useHistory();
   // 要拎到API data，就要用state 去拎，用null 係講就原先係拎唔到任何course data
   let [courseData, setCourseData] = useState(null);
+
   useEffect(() => {
     console.log("Using effect.");
     let _id;
     if (currentUser) {
-      _id = currentUser._id;
+      _id = currentUser.user._id;
     } else {
       _id = "";
     }
-    CourseService.get(_id)
-      .then((data) => {
-        setCourseData(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // console.log(_id);
+    if (currentUser.user.role === "instructor") {
+      CourseService.get(_id)
+        .then((data) => {
+          console.log(data);
+          setCourseData(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log("Getting data for students");
+    }
   }, []);
 
   let clickHandler = () => {
@@ -46,6 +53,24 @@ const Course = (props) => {
       {currentUser && currentUser.user.role === "student" && (
         <div>
           <h1>Welcome to Student page</h1>
+        </div>
+      )}
+      {currentUser && courseData && courseData.length != 0 && (
+        <div>
+          <p>Data we got back from API.</p>
+          {courseData.map((course) => (
+            <div className="card" style={{ width: "18rem" }}>
+              <div className="card-body">
+                <h5 className="card-title">{course.title}</h5>
+                <p className="card-text">{course.description}</p>
+                <p>Price: {course.price}</p>
+                <p>Student: {course.students.length}</p>
+                <a href="#" className="card-text" className="btn btn-primary">
+                  See Course
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
