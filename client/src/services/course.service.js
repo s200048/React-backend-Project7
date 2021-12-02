@@ -24,7 +24,7 @@ class CourseService {
     );
   }
 
-  // enroll course
+  // get enroll course
   getEnroll(_id) {
     let token;
     if (localStorage.getItem("user")) {
@@ -33,7 +33,7 @@ class CourseService {
       token = "";
     }
 
-    return axios.get(API_URL + "/student" + _id, {
+    return axios.get(API_URL + "/student/" + _id, {
       headers: {
         Authorization: token,
       },
@@ -65,10 +65,27 @@ class CourseService {
     } else {
       token = "";
     }
-    // console.log();
+
     return axios.get(API_URL + "/instructor/" + _id, {
       headers: { Authorization: token },
     });
+  }
+
+  enroll(course_id, user_id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+
+    return axios.post(
+      API_URL + "/enroll/" + course_id,
+      { user_id },
+      {
+        headers: { Authorization: token },
+      }
+    );
   }
 }
 

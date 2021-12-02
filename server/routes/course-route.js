@@ -116,6 +116,20 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/enroll/:_id", async (req, res) => {
+  let { _id } = req.params;
+  let { user_id } = req.body;
+  try {
+    let course = await Course.findOne({ _id });
+    course.students.push(user_id);
+    await course.save();
+    res.send("Done Erollment");
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
+});
+
 router.patch("/:_id", async (req, res) => {
   //validate the inputs before making a new course
   const { error } = courseValidation(req.body);
