@@ -17,7 +17,6 @@ export let navData = [
     classname: "nav-link",
     title: "Enrolll",
     path: "/enroll",
-    afterlogin: true,
     isStudent: true,
   },
 

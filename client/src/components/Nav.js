@@ -61,7 +61,10 @@ const Nav = (props) => {
               {currentUser &&
                 currentUser.user.role === "student" &&
                 navData
-                  .filter((item) => item.afterlogin === true)
+                  .filter(
+                    (item) =>
+                      item.afterlogin === true || item.isStudent === true
+                  )
                   .map((filterItem, index) => (
                     <li className="nav-item">
                       <Link
