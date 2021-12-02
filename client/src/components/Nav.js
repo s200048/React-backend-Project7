@@ -59,7 +59,7 @@ const Nav = (props) => {
                     </li>
                   ))}
               {currentUser &&
-                currentUser.user.role == "student" &&
+                currentUser.user.role === "student" &&
                 navData
                   .filter((item) => item.afterlogin === true)
                   .map((filterItem, index) => (
@@ -75,7 +75,7 @@ const Nav = (props) => {
                     </li>
                   ))}
               {currentUser &&
-                currentUser.user.role == "instructor" &&
+                currentUser.user.role === "instructor" &&
                 navData
                   .filter(
                     (item) =>

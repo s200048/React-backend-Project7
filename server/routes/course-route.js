@@ -32,6 +32,35 @@ router.get("/instructor/:_instructor_id", (req, res) => {
     });
 });
 
+//LT 549
+router.get("/findByName/:name", async (req, res) => {
+  let { name } = req.params;
+  try {
+    let findCourse = await Course.find({ title: name }).populate("instructor", [
+      "username",
+      "email",
+    ]);
+    console.log(findCourse);
+    res.status(200).send(findCourse);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+// Wilson ver.
+// router.get("/findByName/:name", (req, res) => {
+//   let { name } = req.params;
+//   Course.find({ title: name })
+//     .populate("instructor", ["username", "email"])
+//     .then((course) => {
+//       console.log(course);
+//       res.status(200).send(course);
+//     })
+//     .catch((err) => {
+//       res.status(500).send(err);
+//     });
+// });
+
 router.get("/student/:_student_id", async (req, res) => {
   let { _student_id } = req.params;
   try {

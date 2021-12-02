@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 import AuthService from "../services/auth.service";
+import { useHistory } from "react-router-dom";
 
 const Profile = (props) => {
   let { currentUser, setCurrentUser } = props;
+  const history = useHistory();
+
+  let clickHandler = () => {
+    history.push("/login");
+  };
 
   return (
     <div style={{ padding: "3rem" }}>
-      {!currentUser && <div>You must login first</div>}
+      {!currentUser && (
+        <div>
+          <p>You must login first</p>
+          <button onClick={clickHandler} className="btn btn-primary btn-lg">
+            Login page
+          </button>
+        </div>
+      )}
       {/* {console.log(currentUser)} */}
       {currentUser && (
         <div>

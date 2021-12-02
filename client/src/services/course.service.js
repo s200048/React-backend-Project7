@@ -25,7 +25,7 @@ class CourseService {
   }
 
   // enroll course
-  getEnroll(_id){
+  getEnroll(_id) {
     let token;
     if (localStorage.getItem("user")) {
       token = JSON.parse(localStorage.getItem("user")).token;
@@ -33,10 +33,28 @@ class CourseService {
       token = "";
     }
 
-    return axios.get(API_URL + "/student" + _id. {
-      
-    })
+    return axios.get(API_URL + "/student" + _id, {
+      headers: {
+        Authorization: token,
+      },
+    });
+  }
 
+  getCourseByName(name) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+
+    // console.log(token);
+    return axios.get(API_URL + "/findByName/" + name, {
+      // headers 一定要加(s) ，唔係會出現unauthorize
+      headers: {
+        Authorization: token,
+      },
+    });
   }
 
   // get course

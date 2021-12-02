@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import courseService from "../services/course.service";
 import CourseService from "../services/course.service";
 
 const Course = (props) => {
@@ -27,7 +28,14 @@ const Course = (props) => {
           console.log(err);
         });
     } else {
-      console.log("Getting data for students");
+      CourseService.getEnroll(_id)
+        .then((data) => {
+          console.log(data);
+          setCourseData(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 

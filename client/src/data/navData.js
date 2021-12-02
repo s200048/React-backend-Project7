@@ -13,6 +13,13 @@ export let navData = [
     beforelogin: true,
   },
   { classname: "nav-link", title: "Login", path: "/login", beforelogin: true },
+  {
+    classname: "nav-link",
+    title: "Enrolll",
+    path: "/enroll",
+    afterlogin: true,
+    isStudent: true,
+  },
 
   {
     classname: "nav-link",
