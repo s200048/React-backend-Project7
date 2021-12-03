@@ -7,21 +7,30 @@ const Course = (props) => {
   const history = useHistory();
   // 要拎到API data，就要用state 去拎，用null 係講就原先係拎唔到任何course data
   let [courseData, setCourseData] = useState(null);
-  // let [beforeDele, setDele] = useState([]);
-
-  // let oriCourseData = [...courseData];
-  // console.log(oriCourseData);
 
   let deleteHandler = (e) => {
     // console.log(e.target.id);
     CourseService.deleteCourse(e.target.id)
-      .then(() => {
+      .then((data) => {
         alert("Delete successfully");
         // 錯 --> 要改
-        courseData.filter((item) => item !== e.target.id);
-
-        // setCourseData(beforeDele);
+        // courseData.filter((item) => item !== e.target.id);
+        console.log(data);
         // history.push("/");
+        let _id;
+        if (currentUser) {
+          _id = currentUser.user._id;
+        } else {
+          _id = "";
+        }
+        CourseService.get(_id)
+          .then((data) => {
+            console.log(data);
+            setCourseData(data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +62,7 @@ const Course = (props) => {
     } else {
       CourseService.getEnroll(_id)
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setCourseData(data.data);
         })
         .catch((err) => {
@@ -62,7 +71,7 @@ const Course = (props) => {
     }
   }, []);
 
-  console.log(courseData);
+  // console.log(courseData);
   // useEffect(() => {
   //   console.log("The course changed.");
   //   // history.push("/course");
