@@ -2,6 +2,20 @@ import axios from "axios";
 const API_URL = "http://localhost:8000/api/courses";
 
 class CourseService {
+  // get all course
+  getCourse() {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+
+    return axios.get(API_URL, {
+      headers: { Authorization: token },
+    });
+  }
+
   //Post course
   post(title, description, price) {
     let token;
@@ -86,6 +100,19 @@ class CourseService {
         headers: { Authorization: token },
       }
     );
+  }
+
+  deleteCourse(course_id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+
+    return axios.delete(API_URL + "/" + course_id, {
+      headers: { Authorization: token },
+    });
   }
 }
 

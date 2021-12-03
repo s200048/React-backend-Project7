@@ -13,14 +13,25 @@ const Enroll = (props) => {
   };
 
   const handleSearch = () => {
-    CourseService.getCourseByName(search)
-      .then((data) => {
-        console.log(data);
-        setSearchResult(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (search.trim() === "") {
+      CourseService.getCourse()
+        .then((data) => {
+          console.log(data);
+          setSearchResult(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      CourseService.getCourseByName(search)
+        .then((data) => {
+          console.log(data);
+          setSearchResult(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const handleEnroll = (e) => {
@@ -37,6 +48,25 @@ const Enroll = (props) => {
   let clickHandler = () => {
     history.push("/login");
   };
+
+  let initSearch = () => {
+    CourseService.getCourse();
+    if (search.trim() === "") {
+      CourseService.getCourse()
+        .then((data) => {
+          console.log(data);
+          setSearchResult(data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  useEffect(() => {
+    console.log("Enroll useEffect.");
+    initSearch();
+  }, []);
 
   return (
     <div style={{ padding: "3rem" }}>
@@ -68,28 +98,32 @@ const Enroll = (props) => {
         </div>
       )}
       {currentUser && searchResult && searchResult.length != 0 && (
-        <div>
+        <>
           <p>Data we got back from API.</p>
-          {searchResult.map((course) => (
-            <div key={course._id} className="card" style={{ width: "18rem" }}>
-              <div className="card-body">
-                <h5 className="card-title">{course.title}</h5>
-                <p className="card-text">{course.description}</p>
-                <p>Price: {course.price}</p>
-                <p>Student: {course.students.length}</p>
-                <a
-                  href="#"
-                  onClick={handleEnroll}
-                  className="card-text"
-                  className="btn btn-primary"
-                  id={course._id}
-                >
-                  Enroll
-                </a>
+          <div
+            style={{ display: "grid", gridTemplateColumns: "auto auto auto" }}
+          >
+            {searchResult.map((course) => (
+              <div key={course._id} className="card" style={{ width: "18rem" }}>
+                <div className="card-body">
+                  <h5 className="card-title">{course.title}</h5>
+                  <p className="card-text">{course.description}</p>
+                  <p>Price: {course.price}</p>
+                  <p>Student: {course.students.length}</p>
+                  <a
+                    href="#"
+                    onClick={handleEnroll}
+                    className="card-text"
+                    className="btn btn-primary"
+                    id={course._id}
+                  >
+                    Enroll
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
