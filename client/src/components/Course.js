@@ -8,33 +8,36 @@ const Course = (props) => {
   // 要拎到API data，就要用state 去拎，用null 係講就原先係拎唔到任何course data
   let [courseData, setCourseData] = useState(null);
 
-  let deleteHandler = (e) => {
+  let deleteHandler = async (e) => {
+    let deleteId = e.target.id;
     // console.log(e.target.id);
-    CourseService.deleteCourse(e.target.id)
-      .then((data) => {
-        alert("Delete successfully");
-        // 錯 --> 要改
-        // courseData.filter((item) => item !== e.target.id);
-        console.log(data);
-        // history.push("/");
-        let _id;
-        if (currentUser) {
-          _id = currentUser.user._id;
-        } else {
-          _id = "";
-        }
-        CourseService.get(_id)
-          .then((data) => {
-            console.log(data);
-            setCourseData(data.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    await CourseService.deleteCourse(e.target.id);
+    alert("Delete successfully");
+    setCourseData(courseData.filter((items) => items._id !== deleteId));
+    // .then((data) => {
+    //   alert("Delete successfully");
+    //   // 錯 --> 要改
+    //   // courseData.filter((item) => item !== e.target.id);
+    //   console.log(data);
+    //   // history.push("/");
+    //   let _id;
+    //   if (currentUser) {
+    //     _id = currentUser.user._id;
+    //   } else {
+    //     _id = "";
+    //   }
+    //   CourseService.get(_id)
+    //     .then((data) => {
+    //       console.log(data);
+    //       setCourseData(data.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   let clickHandler = () => {
@@ -71,7 +74,8 @@ const Course = (props) => {
     }
   }, []);
 
-  // console.log(courseData);
+  console.log(courseData);
+
   // useEffect(() => {
   //   console.log("The course changed.");
   //   // history.push("/course");
