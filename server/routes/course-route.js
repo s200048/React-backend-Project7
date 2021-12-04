@@ -75,6 +75,22 @@ router.get("/student/:_student_id", async (req, res) => {
   }
 });
 
+router.patch("/student/:course_id", async (req, res) => {
+  let { course_id } = req.params;
+  let { user_id } = req.body;
+  try {
+    let update = await Course.findOneAndUpdate(
+      { _id: course_id },
+      { $pull: { students: user_id } }
+    );
+    // console.log(update);
+    // console.log("Updated");
+    res.status(200).send(update);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/:_id", async (req, res) => {
   // console.log(req.params);
   let { _id } = req.params;
@@ -118,9 +134,14 @@ router.post("/", async (req, res) => {
 
 router.post("/enroll/:_id", async (req, res) => {
   let { _id } = req.params;
+  // req.body 係唔會係postman 用到，只會係axios set 果陣用到…
   let { user_id } = req.body;
+  // console.log(req.body);
+  // console.log(user_id);
+  // console.log(_id);
   try {
     let course = await Course.findOne({ _id });
+    console.log(course);
     course.students.push(user_id);
     await course.save();
     res.send("Done Erollment");

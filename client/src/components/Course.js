@@ -10,34 +10,27 @@ const Course = (props) => {
 
   let deleteHandler = async (e) => {
     let deleteId = e.target.id;
+    // console.log(e.target);
     // console.log(e.target.id);
-    await CourseService.deleteCourse(e.target.id);
-    alert("Delete successfully");
-    setCourseData(courseData.filter((items) => items._id !== deleteId));
-    // .then((data) => {
-    //   alert("Delete successfully");
-    //   // 錯 --> 要改
-    //   // courseData.filter((item) => item !== e.target.id);
-    //   console.log(data);
-    //   // history.push("/");
-    //   let _id;
-    //   if (currentUser) {
-    //     _id = currentUser.user._id;
-    //   } else {
-    //     _id = "";
-    //   }
-    //   CourseService.get(_id)
-    //     .then((data) => {
-    //       console.log(data);
-    //       setCourseData(data.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
+    // console.log(currentUser.user._id);
+    if (currentUser.user._id === "instructor") {
+      window.confirm("Are you sure to delete?");
+      try {
+        await CourseService.deleteCourse(e.target.id);
+        alert("Delete successfully");
+        setCourseData(courseData.filter((items) => items._id !== deleteId));
+      } catch (err) {
+        console.log(err);
+      }
+    } else if (currentUser.user._id === "student") {
+      try {
+        let update = await CourseService.cancelEnroll(e.target.id);
+        console.log(update);
+        setCourseData(courseData.filter((items) => items._id !== deleteId));
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   let clickHandler = () => {
@@ -52,6 +45,11 @@ const Course = (props) => {
     } else {
       _id = "";
     }
+
+    if (!currentUser) {
+      return;
+    }
+
     // console.log(_id);
     if (currentUser.user.role === "instructor") {
       CourseService.get(_id)
@@ -115,16 +113,30 @@ const Course = (props) => {
                 <a href="#" className="card-text" className="btn btn-primary">
                   See Course
                 </a>
-                <a
-                  href="#"
-                  className="card-text"
-                  className="btn btn-danger"
-                  id={course._id}
-                  onClick={deleteHandler}
-                  style={{ float: "right" }}
-                >
-                  Delete
-                </a>
+                {currentUser.user.role === "student" && (
+                  <a
+                    href="#"
+                    className="card-text"
+                    className="btn btn-danger"
+                    id={course._id}
+                    onClick={deleteHandler}
+                    style={{ float: "right" }}
+                  >
+                    Cancel
+                  </a>
+                )}
+                {currentUser.user.role === "instructor" && (
+                  <a
+                    href="#"
+                    className="card-text"
+                    className="btn btn-danger"
+                    id={course._id}
+                    onClick={deleteHandler}
+                    style={{ float: "right" }}
+                  >
+                    Delete
+                  </a>
+                )}
               </div>
             </div>
           ))}

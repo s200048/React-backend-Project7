@@ -2,7 +2,7 @@ import axios from "axios";
 const API_URL = "http://localhost:8000/api/courses";
 
 class CourseService {
-  // get all course
+  // get all course for student
   getCourse() {
     let token;
     if (localStorage.getItem("user")) {
@@ -98,6 +98,25 @@ class CourseService {
       { user_id },
       {
         headers: { Authorization: token },
+      }
+    );
+  }
+
+  cancelEnroll(course_id, user_id) {
+    let token;
+    if (localStorage.getItem("user")) {
+      token = JSON.parse(localStorage.getItem("user")).token;
+    } else {
+      token = "";
+    }
+
+    return axios.patch(
+      API_URL + "/student/" + course_id,
+      { user_id },
+      {
+        headers: {
+          Authorization: token,
+        },
       }
     );
   }
